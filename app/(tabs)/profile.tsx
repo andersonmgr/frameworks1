@@ -1,15 +1,40 @@
-import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet, ScrollView, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, Text, StyleSheet, ScrollView, Button, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../styles/profile.styles';
 import { useAuth } from '../context/AuthContext';
 
 export default function ProfileScreen() {
-  const { logout } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const { logout } = useAuth();
 
-  const handleLogout = () => {
-    logout();
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        const storedName = await AsyncStorage.getItem('profile_name');
+        const storedEmail = await AsyncStorage.getItem('profile_email');
+        if (storedName) setName(storedName);
+        if (storedEmail) setEmail(storedEmail);
+      } catch (e) {
+        console.error('Erro ao carregar perfil:', e);
+      }
+    };
+
+    loadProfile();
+  }, []);
+
+
+  const handleSave = async () => {
+    try {
+      await AsyncStorage.setItem('profile_name', name);
+      await AsyncStorage.setItem('profile_email', email);
+      Alert.alert('Perfil salvo com sucesso!');
+    } catch (e) {
+      console.error('Erro ao salvar perfil:', e);
+      Alert.alert('Erro ao salvar perfil');
+    }
   };
 
   return (
@@ -29,9 +54,11 @@ export default function ProfileScreen() {
         placeholder="Digite seu e-mail"
         keyboardType="email-address"
       />
-      
-      <View style={styles.logoutButton}>
-        <Button title="Sair da conta" onPress={handleLogout} color="#d9534f" />
+      <View style={{ marginTop: 20 }}>
+        <Button title="Salvar" onPress={handleSave} />
+      </View>
+      <View style={{ marginTop: 10 }}>
+        <Button title="Deslogar" onPress={logout} color="#d9534f" />
       </View>
     </ScrollView>
   );
