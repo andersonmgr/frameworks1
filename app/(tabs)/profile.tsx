@@ -7,16 +7,19 @@ import { useAuth } from '../context/AuthContext';
 export default function ProfileScreen() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [operations, setOperations] = useState<string[]>([]);
   const { logout } = useAuth();
-
 
   useEffect(() => {
     const loadProfile = async () => {
       try {
         const storedName = await AsyncStorage.getItem('profile_name');
         const storedEmail = await AsyncStorage.getItem('profile_email');
+        const storedOps = await AsyncStorage.getItem('operations');
+
         if (storedName) setName(storedName);
         if (storedEmail) setEmail(storedEmail);
+        if (storedOps) setOperations(JSON.parse(storedOps));
       } catch (e) {
         console.error('Erro ao carregar perfil:', e);
       }
@@ -24,7 +27,6 @@ export default function ProfileScreen() {
 
     loadProfile();
   }, []);
-
 
   const handleSave = async () => {
     try {
@@ -60,6 +62,15 @@ export default function ProfileScreen() {
       <View style={{ marginTop: 10 }}>
         <Button title="Deslogar" onPress={logout} color="#d9534f" />
       </View>
+
+      {operations.length > 0 && (
+        <View style={{ marginTop: 30 }}>
+          <Text style={styles.label}>Últimos 10 cálculos:</Text>
+          {operations.map((op, index) => (
+            <Text key={index} style={{ marginBottom: 4 }}>{op}</Text>
+          ))}
+        </View>
+      )}
     </ScrollView>
   );
 }
