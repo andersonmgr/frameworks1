@@ -1,20 +1,42 @@
-import { StyleSheet, Dimensions } from 'react-native';
-const { width } = Dimensions.get('window');
+import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    width: width * 0.9,
+    padding: 16,
+    backgroundColor: '#fff',
   },
   label: {
     fontSize: 18,
-    marginTop: 20,
+    fontWeight: 'bold',
+    marginBottom: 8,
   },
   input: {
+    height: 40,
+    borderColor: '#ccc',
     borderWidth: 1,
-    padding: 10,
-    marginTop: 5,
-    width: '100%',
+    borderRadius: 5,
+    marginBottom: 16,
+    paddingLeft: 8,
+  },
+  operationsHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  updateButton: {
+    width: 40,
+    height: 40,
+    backgroundColor: '#007bff',
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 10,
+  },
+  updateButtonText: {
+    color: '#fff',
+    fontSize: 20,
   },
 });
+
+export default styles;

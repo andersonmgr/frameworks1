@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { View, TextInput, Text, StyleSheet, ScrollView, Button, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import styles from '../styles/profile.styles';
+import React, { useEffect, useState } from 'react';
+import { Button, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useAuth } from '../context/AuthContext';
+import styles from '../styles/profile.styles';
 
 export default function ProfileScreen() {
   const [name, setName] = useState('');
@@ -32,10 +32,25 @@ export default function ProfileScreen() {
     try {
       await AsyncStorage.setItem('profile_name', name);
       await AsyncStorage.setItem('profile_email', email);
-      Alert.alert('Perfil salvo com sucesso!');
+      alert('Perfil salvo com sucesso!');
     } catch (e) {
       console.error('Erro ao salvar perfil:', e);
-      Alert.alert('Erro ao salvar perfil');
+      alert('Erro ao salvar perfil');
+    }
+  };
+
+  const handleUpdateOperations = async () => {
+    try {
+      const storedOps = await AsyncStorage.getItem('operations');
+      if (storedOps) {
+        setOperations(JSON.parse(storedOps));
+        alert('Lista de cálculos atualizada!');
+      } else {
+        alert('Não há cálculos salvos.');
+      }
+    } catch (e) {
+      console.error('Erro ao atualizar a lista de cálculos:', e);
+      alert('Erro ao atualizar a lista');
     }
   };
 
@@ -65,7 +80,15 @@ export default function ProfileScreen() {
 
       {operations.length > 0 && (
         <View style={{ marginTop: 30 }}>
-          <Text style={styles.label}>Últimos 10 cálculos:</Text>
+          <View style={styles.operationsHeader}>
+            <Text style={styles.label}>Últimos 10 cálculos:</Text>
+
+            {}
+            <TouchableOpacity onPress={handleUpdateOperations} style={styles.updateButton}>
+              <Text style={styles.updateButtonText}>↻</Text> {}
+            </TouchableOpacity>
+          </View>
+
           {operations.map((op, index) => (
             <Text key={index} style={{ marginBottom: 4 }}>{op}</Text>
           ))}
