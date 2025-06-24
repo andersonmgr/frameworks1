@@ -54,6 +54,17 @@ export default function ProfileScreen() {
     }
   };
 
+  const handleClearOperations = async () => {
+    try {
+      await AsyncStorage.removeItem('operations');
+      setOperations([]);
+      alert('Últimos cálculos limpos com sucesso!');
+    } catch (e) {
+      console.error('Erro ao limpar cálculos:', e);
+      alert('Erro ao limpar cálculos');
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.label}>Nome:</Text>
@@ -78,22 +89,33 @@ export default function ProfileScreen() {
         <Button title="Deslogar" onPress={logout} color="#d9534f" />
       </View>
 
-      {operations.length > 0 && (
-        <View style={{ marginTop: 30 }}>
-          <View style={styles.operationsHeader}>
-            <Text style={styles.label}>Últimos 10 cálculos:</Text>
+      <View style={{ marginTop: 30 }}>
+        <View style={[styles.operationsHeader, { flexDirection: 'row', alignItems: 'center' }]}>
+          <Text style={styles.label}>Últimos 10 cálculos:</Text>
 
-            {}
-            <TouchableOpacity onPress={handleUpdateOperations} style={styles.updateButton}>
-              <Text style={styles.updateButtonText}>↻</Text> {}
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity onPress={handleUpdateOperations} style={styles.updateButton}>
+            <Text style={styles.updateButtonText}>↻</Text>
+          </TouchableOpacity>
 
-          {operations.map((op, index) => (
-            <Text key={index} style={{ marginBottom: 4 }}>{op}</Text>
-          ))}
+          <TouchableOpacity
+            onPress={handleClearOperations}
+            style={[styles.updateButton, { marginLeft: 10 }]}
+            accessibilityLabel="Limpar últimos cálculos"
+          >
+            <Text style={styles.updateButtonText}>🗑️</Text>
+          </TouchableOpacity>
         </View>
-      )}
+
+        {operations.length > 0 ? (
+          operations.map((op, index) => (
+            <Text key={index} style={{ marginBottom: 4 }}>{op}</Text>
+          ))
+        ) : (
+          <Text style={{ fontStyle: 'italic', color: '#888', marginTop: 8 }}>
+            Nenhum cálculo salvo.
+          </Text>
+        )}
+      </View>
     </ScrollView>
   );
 }
