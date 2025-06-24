@@ -1,34 +1,37 @@
-import { StyleSheet, Dimensions } from 'react-native';
-const { width, height } = Dimensions.get('window');
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexGrow: 1,
     padding: 20,
-    width: '100%',
-    height: '100%',
     backgroundColor: '#f5f5f5',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    width: '100%',
   },
   input: {
+    backgroundColor: '#fff',
     borderWidth: 1,
+    borderColor: '#ccc',
     padding: 15,
     marginVertical: 10,
-    width: '100%',
     fontSize: 18,
     borderRadius: 8,
+    color: '#000',
+    width: '100%',
   },
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     width: '100%',
     flexWrap: 'wrap',
+    marginTop: 10,
   },
   result: {
     fontSize: 24,
     textAlign: 'center',
     marginTop: 20,
     fontWeight: 'bold',
+    color: '#222',
   },
 });

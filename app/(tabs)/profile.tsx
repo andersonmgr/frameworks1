@@ -66,14 +66,16 @@ export default function ProfileScreen() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
       <Text style={styles.label}>Nome:</Text>
       <TextInput
         style={styles.input}
         value={name}
         onChangeText={setName}
         placeholder="Digite seu nome"
+        placeholderTextColor="#999"
       />
+
       <Text style={styles.label}>Email:</Text>
       <TextInput
         style={styles.input}
@@ -81,16 +83,19 @@ export default function ProfileScreen() {
         onChangeText={setEmail}
         placeholder="Digite seu e-mail"
         keyboardType="email-address"
+        placeholderTextColor="#999"
       />
-      <View style={{ marginTop: 20 }}>
+
+      <View style={styles.buttonContainer}>
         <Button title="Salvar" onPress={handleSave} />
       </View>
-      <View style={{ marginTop: 10 }}>
+
+      <View style={styles.logoutButton}>
         <Button title="Deslogar" onPress={logout} color="#d9534f" />
       </View>
 
       <View style={{ marginTop: 30 }}>
-        <View style={[styles.operationsHeader, { flexDirection: 'row', alignItems: 'center' }]}>
+        <View style={styles.operationsHeader}>
           <Text style={styles.label}>Últimos 10 cálculos:</Text>
 
           <TouchableOpacity onPress={handleUpdateOperations} style={styles.updateButton}>
@@ -108,12 +113,12 @@ export default function ProfileScreen() {
 
         {operations.length > 0 ? (
           operations.map((op, index) => (
-            <Text key={index} style={{ marginBottom: 4 }}>{op}</Text>
+            <Text key={index} style={styles.operationText}>
+              {op}
+            </Text>
           ))
         ) : (
-          <Text style={{ fontStyle: 'italic', color: '#888', marginTop: 8 }}>
-            Nenhum cálculo salvo.
-          </Text>
+          <Text style={styles.emptyText}>Nenhum cálculo salvo.</Text>
         )}
       </View>
     </ScrollView>

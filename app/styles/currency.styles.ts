@@ -1,25 +1,25 @@
-import { StyleSheet, Dimensions } from 'react-native';
-const { width, height } = Dimensions.get('window');
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexGrow: 1,                
     padding: 20,
-    width: width * 0.9,
-    height: height * 0.8,
     backgroundColor: '#f5f5f5',
+    justifyContent: 'flex-start',  
+    alignItems: 'stretch',        
+    width: '100%',                
   },
   title: {
     fontSize: 24,
     marginBottom: 20,
     textAlign: 'center',
     fontWeight: 'bold',
+    color: '#222',
   },
   text: {
     fontSize: 18,
     marginVertical: 10,
     textAlign: 'center',
+    color: '#333',
   },
 });

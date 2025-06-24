@@ -1,23 +1,30 @@
 import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#fff',
+    flexGrow: 1,
+    padding: 20,
+    backgroundColor: '#f5f5f5',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    width: '100%',
   },
   label: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 8,
+    color: '#222',
   },
   input: {
-    height: 40,
+    height: 50,
+    backgroundColor: '#fff',
     borderColor: '#ccc',
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 8,
     marginBottom: 16,
-    paddingLeft: 8,
+    paddingHorizontal: 15,
+    fontSize: 18,
+    color: '#000',
   },
   operationsHeader: {
     flexDirection: 'row',
@@ -37,6 +44,21 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 20,
   },
+  operationText: {
+    marginBottom: 6,
+    fontSize: 16,
+    color: '#333',
+  },
+  emptyText: {
+    fontStyle: 'italic',
+    color: '#888',
+    marginTop: 8,
+    fontSize: 16,
+  },
+  buttonContainer: {
+    marginTop: 20,
+  },
+  logoutButton: {
+    marginTop: 10,
+  },
 });
-
-export default styles;

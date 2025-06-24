@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Modal, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  Modal,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import styles from '../styles/currency.styles';
 
 type CurrencyData = {
@@ -87,22 +96,34 @@ export default function CurrencyScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Cotações:</Text>
-      <Text>Dólar: R$ {parseFloat(data.USDBRL.bid).toFixed(2)}</Text>
-      <Text>Euro: R$ {parseFloat(data.EURBRL.bid).toFixed(2)}</Text>
-      <Text>Bitcoin: R$ {parseFloat(data.BTCBRL.bid).toFixed(2)}</Text>
+      {/* Centraliza o bloco das cotações */}
+      <View style={{ alignItems: 'center', marginBottom: 20 }}>
+        <Text style={styles.title}>Cotações:</Text>
+        <Text>Dólar: R$ {parseFloat(data.USDBRL.bid).toFixed(2)}</Text>
+        <Text>Euro: R$ {parseFloat(data.EURBRL.bid).toFixed(2)}</Text>
+        <Text>Bitcoin: R$ {parseFloat(data.BTCBRL.bid).toFixed(2)}</Text>
+      </View>
 
       <Text style={styles.title}>Conversor de Moedas</Text>
 
-      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexWrap: 'wrap',
+          gap: 10,
+          marginTop: 20,
+        }}
+      >
         <TextInput
           style={{
             backgroundColor: '#fff',
             borderColor: '#ccc',
             borderWidth: 1,
             padding: 10,
-            width: 100,
-            marginRight: 10,
+            flexGrow: 1,
+            minWidth: 80,
             borderRadius: 5,
             textAlign: 'center',
           }}
@@ -120,11 +141,13 @@ export default function CurrencyScreen() {
             borderRadius: 5,
             padding: 10,
             backgroundColor: '#eee',
-            width: 160,
+            flexGrow: 2,
+            minWidth: 120,
             alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
-          <Text>{conversionOptions.find(opt => opt.value === conversionType)?.label}</Text>
+          <Text>{conversionOptions.find((opt) => opt.value === conversionType)?.label}</Text>
         </TouchableOpacity>
 
         <TextInput
@@ -133,8 +156,8 @@ export default function CurrencyScreen() {
             borderColor: '#ccc',
             borderWidth: 1,
             padding: 10,
-            width: 100,
-            marginLeft: 10,
+            flexGrow: 1,
+            minWidth: 80,
             borderRadius: 5,
             textAlign: 'center',
           }}
@@ -144,21 +167,27 @@ export default function CurrencyScreen() {
         />
       </View>
 
-      {}
       <Modal visible={modalVisible} transparent animationType="slide">
-        <View style={{
-          flex: 1,
-          backgroundColor: 'rgba(0,0,0,0.5)',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-          <View style={{
-            backgroundColor: '#fff',
-            borderRadius: 10,
-            padding: 20,
-            width: '80%'
-          }}>
-            <Text style={{ fontWeight: 'bold', fontSize: 18, marginBottom: 10 }}>Selecionar conversão</Text>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: '#fff',
+              borderRadius: 10,
+              padding: 20,
+              width: '80%',
+              maxHeight: '70%',
+            }}
+          >
+            <Text style={{ fontWeight: 'bold', fontSize: 18, marginBottom: 10 }}>
+              Selecionar conversão
+            </Text>
             <FlatList
               data={conversionOptions}
               keyExtractor={(item) => item.value}
@@ -173,17 +202,17 @@ export default function CurrencyScreen() {
                   <Text>{item.label}</Text>
                 </TouchableOpacity>
               )}
+              style={{ marginBottom: 10 }}
             />
             <TouchableOpacity
               onPress={() => setModalVisible(false)}
-              style={{ marginTop: 10, alignSelf: 'center' }}
+              style={{ alignSelf: 'center' }}
             >
-              <Text style={{ color: 'red' }}>Cancelar</Text>
+              <Text style={{ color: 'red', fontWeight: '600' }}>Cancelar</Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
-
     </ScrollView>
   );
 }

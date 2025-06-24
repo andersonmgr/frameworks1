@@ -17,13 +17,13 @@ export default function TabsLayout() {
           return <Ionicons name={iconName} size={size} color={color} />;
         },
         tabBarLabelStyle: {
-          fontSize: 12, // Ajuste o tamanho da fonte para evitar corte
-          fontWeight: 'bold', // Pode ajudar a melhorar a legibilidade
-          marginTop: 5, // Ajuste o espaço entre o ícone e o texto
+          fontSize: 12,
+          fontWeight: 'bold',
+          marginTop: 5,
         },
         tabBarStyle: {
-          paddingBottom: 5, // Ajuste o espaçamento inferior
-          height: 60, // Pode aumentar a altura da barra de navegação para dar mais espaço
+          paddingBottom: 5,
+          height: 60,
         },
       })}
     >
